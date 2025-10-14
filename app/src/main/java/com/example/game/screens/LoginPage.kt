@@ -32,7 +32,7 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun LoginPage(navController: NavController) {
-    // Champs utilisateur
+    // User Inputs
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
@@ -44,7 +44,7 @@ fun LoginPage(navController: NavController) {
     val snackBarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
 
-    // Palette dynamique
+    // Color
     val colorScheme = MaterialTheme.colorScheme
 
     Scaffold(
@@ -160,7 +160,7 @@ fun LoginPage(navController: NavController) {
                         }
                     }
                 },
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth().height(48.dp),
                 shape = RoundedCornerShape(24.dp),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = colorScheme.primary,
@@ -172,7 +172,7 @@ fun LoginPage(navController: NavController) {
 
             Spacer(Modifier.height(16.dp))
 
-            // Mot de passe oublié + Remember Me
+            // Forget Password
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -209,7 +209,7 @@ fun LoginPage(navController: NavController) {
 
             Spacer(Modifier.height(20.dp))
 
-            // Connexion réseaux sociaux
+            // Social Media
             Row(
                 Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,

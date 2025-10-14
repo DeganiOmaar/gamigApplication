@@ -10,7 +10,7 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
-// 🌙 Palette de couleurs pour le mode sombre
+//  Palette de couleurs pour le mode sombre
 private val DarkColorScheme = darkColorScheme(
     primary = DarkPrimary,
     background = DarkBackground,
@@ -20,7 +20,7 @@ private val DarkColorScheme = darkColorScheme(
     onSurface = DarkText
 )
 
-// 🌞 Palette de couleurs pour le mode clair
+//  Palette de couleurs pour le mode clair
 private val LightColorScheme = lightColorScheme(
     primary = LightPrimary,
     background = LightBackground,

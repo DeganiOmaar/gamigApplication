@@ -25,7 +25,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            // 🎨 Applique automatiquement le thème clair ou sombre selon le système
+            // Dark & Light effect
             GameTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
