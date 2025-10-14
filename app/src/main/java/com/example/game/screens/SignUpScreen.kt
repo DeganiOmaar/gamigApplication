@@ -11,6 +11,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -104,8 +105,13 @@ fun SignUpScreen(navController: NavController) {
             )
 
             if (fullNameError) {
+                val message = when {
+                    fullName.isEmpty() -> "Full name must be not empty"
+                    fullName.length < 6 -> "Full name must be at least 6 characters"
+                    else -> ""
+                }
                 Text(
-                    text = "Name must not be empty!",
+                    text = message,
                     color = MaterialTheme.colorScheme.error,
                     fontSize = 12.sp,
                     modifier = Modifier.padding(top = 4.dp)
@@ -226,12 +232,34 @@ fun SignUpScreen(navController: NavController) {
             // Submit button
             Button(
                 onClick = {
-                    fullNameError = fullName.isEmpty()
-                    emailError = email.isEmpty() || !email.endsWith("@esprit.tn")
-                    passwordError = password.isEmpty()
-                    confirmPasswordError = confirmPassword.isEmpty() || confirmPassword != password
+                    // Reset all errors first
+                    fullNameError = false
+                    emailError = false
+                    passwordError = false
+                    confirmPasswordError = false
 
-                    if (!fullNameError && !emailError && !passwordError && !confirmPasswordError) {
+                    // Validate all fields
+                    var hasError = false
+
+                    if (fullName.isEmpty() || fullName.length < 6) {
+                        fullNameError = true
+                        hasError = true
+                    }
+                    if (email.isEmpty() || !email.endsWith("@esprit.tn")) {
+                        emailError = true
+                        hasError = true
+                    }
+                    if (password.isEmpty()) {
+                        passwordError = true
+                        hasError = true
+                    }
+                    if (confirmPassword.isEmpty() || confirmPassword != password) {
+                        confirmPasswordError = true
+                        hasError = true
+                    }
+
+                    // If no error, show success message
+                    if (!hasError) {
                         scope.launch {
                             snackBarHostState.showSnackbar(
                                 message = "Registered Successfully",
@@ -247,7 +275,7 @@ fun SignUpScreen(navController: NavController) {
                     contentColor = colorScheme.onPrimary
                 )
             ) {
-                Text("Submit", fontWeight = FontWeight.Bold, fontSize = 18.sp)
+                Text("Submit", fontWeight = FontWeight.Bold, fontSize = 18.sp, color = Color.White)
             }
 
             Spacer(Modifier.height(20.dp))

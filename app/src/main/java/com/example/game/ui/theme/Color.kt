@@ -10,7 +10,7 @@ val LightText = Color(0xFF000000)
 val LightSnackbar = Color(0xFFE91E63)
 
 // 🌙 Mode sombre
-val DarkPrimary = Color(0xFF9C27B0)
+val DarkPrimary = Color(0xFFE91E63)
 val DarkBackground = Color(0xFF121212)
 val DarkSurface = Color(0xFF121212)
 val DarkText = Color(0xFFFFFFFF)

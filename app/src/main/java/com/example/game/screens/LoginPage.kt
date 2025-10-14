@@ -167,7 +167,7 @@ fun LoginPage(navController: NavController) {
                     contentColor = colorScheme.onPrimary
                 )
             ) {
-                Text("Login", fontWeight = FontWeight.Bold, fontSize = 18.sp)
+                Text("Login", fontWeight = FontWeight.Bold, fontSize = 18.sp, color = Color.White)
             }
 
             Spacer(Modifier.height(16.dp))
@@ -290,8 +290,18 @@ fun LoginPage(navController: NavController) {
 
 @Preview(showBackground = true)
 @Composable
-fun LoginPagePreview() {
+fun LoginPageLightPreview() {
     GameTheme(darkTheme = false) {
+        val navController = rememberNavController()
+        LoginPage(navController)
+    }
+}
+
+
+@Preview(showBackground = true)
+@Composable
+fun LoginPageDarkPreview() {
+    GameTheme(darkTheme = true) {
         val navController = rememberNavController()
         LoginPage(navController)
     }
