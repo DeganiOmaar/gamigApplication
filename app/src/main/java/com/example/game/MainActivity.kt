@@ -10,12 +10,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.example.game.navigation.Routes
 import com.example.game.screens.ForgetPasswordScreen
 import com.example.game.screens.LoginPage
+import com.example.game.screens.OtpVerification
 import com.example.game.screens.SignUpScreen
 import com.example.game.screens.SplashScreen
 import com.example.game.ui.theme.GameTheme
@@ -60,6 +63,14 @@ fun MainNavigation() {
 
         composable(Routes.SignUp.route) {
             SignUpScreen(navController)
+        }
+
+        composable(
+            route = Routes.OtpVerification.route,
+            arguments = listOf(navArgument("code") { type = NavType.StringType })
+        ) { backStackEntry ->
+            val expectedCode = backStackEntry.arguments?.getString("code") ?: ""
+            OtpVerification(navController = navController, expectedCode = expectedCode)
         }
     }
 }

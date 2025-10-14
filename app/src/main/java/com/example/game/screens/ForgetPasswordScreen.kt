@@ -165,6 +165,10 @@ fun ForgetPasswordScreen(navController: NavController) {
 
             Button(
                 onClick = {
+                    val otpToSend = "6789"
+                    navController.navigate(
+                        com.example.game.navigation.Routes.OtpVerification.withCode(otpToSend)
+                    )
                 },
                 modifier = Modifier.fillMaxWidth().height(48.dp)
             ) {
