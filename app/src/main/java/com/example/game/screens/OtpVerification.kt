@@ -36,6 +36,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.example.game.navigation.Routes
 import com.example.game.screens.components.OtpInput
 import com.example.game.ui.theme.GameTheme
 import kotlinx.coroutines.launch
@@ -94,12 +95,7 @@ fun OtpVerification(navController: NavController,expectedCode: String) {
                 onClick = {
                     if (otp == expectedCode) {
                         // Success
-                        scope.launch {
-                            snackBarHostState.showSnackbar(
-                                message = " Code verified successfully!",
-                                withDismissAction = true
-                            )
-                        }
+                        navController.navigate(Routes.ResetPassword.route)
                         // TODO LATER
                     } else {
                         // Error

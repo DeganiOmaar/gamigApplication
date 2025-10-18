@@ -13,6 +13,7 @@ import androidx.core.view.WindowCompat
 //  Palette de couleurs pour le mode sombre
 private val DarkColorScheme = darkColorScheme(
     primary = DarkPrimary,
+    secondary = iconDarkColor,
     background = DarkBackground,
     surface = DarkSurface,
     onPrimary = DarkText,
@@ -23,6 +24,7 @@ private val DarkColorScheme = darkColorScheme(
 //  Palette de couleurs pour le mode clair
 private val LightColorScheme = lightColorScheme(
     primary = LightPrimary,
+    secondary = iconLightColor,
     background = LightBackground,
     surface = LightSurface,
     onPrimary = LightText,

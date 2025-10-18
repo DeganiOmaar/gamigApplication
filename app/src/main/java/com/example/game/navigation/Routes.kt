@@ -10,5 +10,6 @@ sealed class Routes(val route: String) {
     object OtpVerification : Routes("otp/{code}"){
         fun withCode(code: String) = "otp/$code"
     }
+    object ResetPassword : Routes("reset_password")
 
 }

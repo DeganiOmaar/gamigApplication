@@ -19,6 +19,7 @@ import com.example.game.navigation.Routes
 import com.example.game.screens.ForgetPasswordScreen
 import com.example.game.screens.LoginPage
 import com.example.game.screens.OtpVerification
+import com.example.game.screens.ResetPassword
 import com.example.game.screens.SignUpScreen
 import com.example.game.screens.SplashScreen
 import com.example.game.ui.theme.GameTheme
@@ -71,6 +72,10 @@ fun MainNavigation() {
         ) { backStackEntry ->
             val expectedCode = backStackEntry.arguments?.getString("code") ?: ""
             OtpVerification(navController = navController, expectedCode = expectedCode)
+        }
+
+        composable(Routes.ResetPassword.route) {
+            ResetPassword(navController)
         }
     }
 }
