@@ -14,6 +14,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowCircleLeft
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
@@ -39,11 +40,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.example.game.navigation.Routes
 import com.example.game.ui.theme.GameTheme
 import kotlinx.coroutines.launch
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 
 @Composable
-fun ResetPassword(navController: NavController){
+fun ResetPassword(navController: NavController) {
     val colorScheme = MaterialTheme.colorScheme
 
     var password by remember { mutableStateOf("") }
@@ -52,51 +56,56 @@ fun ResetPassword(navController: NavController){
     var passwordError by remember { mutableStateOf(false) }
     var confirmPasswordError by remember { mutableStateOf(false) }
 
+    // State for visibility toggle
+    var isPasswordVisible by remember { mutableStateOf(false) }
+    var isConfirmPasswordVisible by remember { mutableStateOf(false) }
+
     val snackBarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
 
-
     Scaffold(snackbarHost = { SnackbarHost(hostState = snackBarHostState) },
         containerColor = colorScheme.background
-    ) {  innerPadding ->
-        Column (
+    ) { innerPadding ->
+        Column(
             horizontalAlignment = Alignment.Start,
             verticalArrangement = Arrangement.Top,
             modifier = Modifier.fillMaxSize()
-                .padding(16.dp,12.dp)
+                .padding(16.dp, 12.dp)
                 .padding(innerPadding)
-        ){
+        ) {
+            // Back Icon
             Icon(
                 imageVector = Icons.Filled.ArrowCircleLeft,
                 contentDescription = "Back Icon",
                 tint = colorScheme.primary,
                 modifier = Modifier.size(36.dp)
-                    .clickable{
-                        //TODO LATER
+                    .clickable {
+                        // TODO LATER
                     }
             )
 
             Spacer(Modifier.height(20.dp))
 
+            // Title Text
             Text(
                 "Reset Password",
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold,
-                color =  colorScheme.onPrimary
-                )
-
+                color = colorScheme.onPrimary
+            )
 
             Spacer(Modifier.height(20.dp))
 
+            // Instructions Text
             Text("Please enter your new password and confirm it.",
                 fontSize = 16.sp,
                 fontWeight = FontWeight.W400,
                 color = colorScheme.onPrimary
-                )
+            )
 
             Spacer(Modifier.height(22.dp))
 
-            // Password
+            // Password Field
             OutlinedTextField(
                 value = password,
                 onValueChange = {
@@ -109,11 +118,17 @@ fun ResetPassword(navController: NavController){
                         tint = colorScheme.secondary)
                 },
                 trailingIcon = {
-                    Icon(Icons.Filled.Visibility, contentDescription = null, tint = colorScheme.primary)
+                    Icon(
+                        imageVector = if (isPasswordVisible) Icons.Filled.Visibility else Icons.Filled.VisibilityOff,
+                        contentDescription = null,
+                        tint = colorScheme.primary,
+                        modifier = Modifier.clickable { isPasswordVisible = !isPasswordVisible }
+                    )
                 },
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(32.dp),
                 isError = passwordError,
+                visualTransformation = if (isPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
                 colors = OutlinedTextFieldDefaults.colors(
                     focusedBorderColor = colorScheme.primary,
                     unfocusedBorderColor = colorScheme.onSurface.copy(alpha = 0.4f),
@@ -132,7 +147,7 @@ fun ResetPassword(navController: NavController){
 
             Spacer(Modifier.height(22.dp))
 
-            // Confirm Password
+            // Confirm Password Field
             OutlinedTextField(
                 value = confirmPassword,
                 onValueChange = {
@@ -145,12 +160,17 @@ fun ResetPassword(navController: NavController){
                         contentDescription = null, tint = colorScheme.secondary)
                 },
                 trailingIcon = {
-                    Icon(Icons.Filled.Visibility,
-                        contentDescription = null, tint = colorScheme.primary)
+                    Icon(
+                        imageVector = if (isConfirmPasswordVisible) Icons.Filled.Visibility else Icons.Filled.VisibilityOff,
+                        contentDescription = null,
+                        tint = colorScheme.primary,
+                        modifier = Modifier.clickable { isConfirmPasswordVisible = !isConfirmPasswordVisible }
+                    )
                 },
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(32.dp),
                 isError = confirmPasswordError,
+                visualTransformation = if (isConfirmPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
                 colors = OutlinedTextFieldDefaults.colors(
                     focusedBorderColor = colorScheme.primary,
                     unfocusedBorderColor = colorScheme.onSurface.copy(alpha = 0.4f),
@@ -174,16 +194,14 @@ fun ResetPassword(navController: NavController){
 
             Spacer(Modifier.height(22.dp))
 
-            // Reset button
+            // Reset Button
             Button(
                 onClick = {
-
                     passwordError = false
                     confirmPasswordError = false
 
                     // Validate all fields
                     var hasError = false
-
 
                     if (password.isEmpty()) {
                         passwordError = true
@@ -197,9 +215,13 @@ fun ResetPassword(navController: NavController){
                     if (hasError) {
                         scope.launch {
                             snackBarHostState.showSnackbar(
-                                message = "You Have Some Errors in your inputs",
-
+                                message = "You Have Some Errors in your inputs"
                             )
+                        }
+                    } else {
+                        // Navigate to login screen when passwords match
+                        navController.navigate(Routes.Login.route) {
+                            popUpTo(Routes.ResetPassword.route) { inclusive = true }  // Prevents going back to the reset screen
                         }
                     }
                 },
@@ -212,17 +234,9 @@ fun ResetPassword(navController: NavController){
             ) {
                 Text("Submit", fontWeight = FontWeight.Bold, fontSize = 18.sp, color = Color.White)
             }
-
-
-
-
-
         }
-
     }
-
 }
-
 
 @Preview(showBackground = true)
 @Composable

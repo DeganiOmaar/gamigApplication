@@ -23,6 +23,8 @@ import androidx.navigation.compose.rememberNavController
 import com.example.game.R
 import com.example.game.ui.theme.GameTheme
 import kotlinx.coroutines.launch
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 
 @Composable
 fun SignUpScreen(navController: NavController) {
@@ -37,6 +39,10 @@ fun SignUpScreen(navController: NavController) {
     var emailError by remember { mutableStateOf(false) }
     var passwordError by remember { mutableStateOf(false) }
     var confirmPasswordError by remember { mutableStateOf(false) }
+
+    // Password Visibility State
+    var isPasswordVisible by remember { mutableStateOf(false) }
+    var isConfirmPasswordVisible by remember { mutableStateOf(false) }
 
     // SnackBar
     val snackBarHostState = remember { SnackbarHostState() }
@@ -92,7 +98,7 @@ fun SignUpScreen(navController: NavController) {
                 },
                 label = { Text("Full Name") },
                 leadingIcon = {
-                    Icon(Icons.Filled.Person, contentDescription = null, tint = colorScheme.primary)
+                    Icon(Icons.Filled.Person, contentDescription = null, tint = colorScheme.secondary)
                 },
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(32.dp),
@@ -129,7 +135,7 @@ fun SignUpScreen(navController: NavController) {
                 },
                 label = { Text("Email") },
                 leadingIcon = {
-                    Icon(Icons.Default.Email, contentDescription = null, tint = colorScheme.primary)
+                    Icon(Icons.Default.Email, contentDescription = null, tint = colorScheme.secondary)
                 },
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(32.dp),
@@ -166,14 +172,20 @@ fun SignUpScreen(navController: NavController) {
                 },
                 label = { Text("Password") },
                 leadingIcon = {
-                    Icon(Icons.Default.Lock, contentDescription = null, tint = colorScheme.primary)
+                    Icon(Icons.Default.Lock, contentDescription = null, tint = colorScheme.secondary)
                 },
                 trailingIcon = {
-                    Icon(Icons.Filled.Visibility, contentDescription = null, tint = colorScheme.primary)
+                    Icon(
+                        imageVector = if (isPasswordVisible) Icons.Filled.Visibility else Icons.Filled.VisibilityOff,
+                        contentDescription = null,
+                        tint = colorScheme.primary,
+                        modifier = Modifier.clickable { isPasswordVisible = !isPasswordVisible }
+                    )
                 },
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(32.dp),
                 isError = passwordError,
+                visualTransformation = if (isPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
                 colors = OutlinedTextFieldDefaults.colors(
                     focusedBorderColor = colorScheme.primary,
                     unfocusedBorderColor = colorScheme.onSurface.copy(alpha = 0.4f),
@@ -201,11 +213,20 @@ fun SignUpScreen(navController: NavController) {
                 },
                 label = { Text("Confirm Password") },
                 leadingIcon = {
-                    Icon(Icons.Default.Lock, contentDescription = null, tint = colorScheme.primary)
+                    Icon(Icons.Default.Lock, contentDescription = null, tint = colorScheme.secondary)
+                },
+                trailingIcon = {
+                    Icon(
+                        imageVector = if (isConfirmPasswordVisible) Icons.Filled.Visibility else Icons.Filled.VisibilityOff,
+                        contentDescription = null,
+                        tint = colorScheme.primary,
+                        modifier = Modifier.clickable { isConfirmPasswordVisible = !isConfirmPasswordVisible }
+                    )
                 },
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(32.dp),
                 isError = confirmPasswordError,
+                visualTransformation = if (isConfirmPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
                 colors = OutlinedTextFieldDefaults.colors(
                     focusedBorderColor = colorScheme.primary,
                     unfocusedBorderColor = colorScheme.onSurface.copy(alpha = 0.4f),

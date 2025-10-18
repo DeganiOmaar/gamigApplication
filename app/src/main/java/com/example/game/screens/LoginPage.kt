@@ -10,6 +10,7 @@ import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Facebook
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -29,6 +30,8 @@ import com.example.game.R
 import com.example.game.navigation.Routes
 import com.example.game.ui.theme.GameTheme
 import kotlinx.coroutines.launch
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 
 @Composable
 fun LoginPage(navController: NavController) {
@@ -39,6 +42,9 @@ fun LoginPage(navController: NavController) {
     // Validation
     var emailError by remember { mutableStateOf(false) }
     var passwordError by remember { mutableStateOf(false) }
+
+    // Password Visibility State
+    var isPasswordVisible by remember { mutableStateOf(false) }
 
     // SnackBar
     val snackBarHostState = remember { SnackbarHostState() }
@@ -79,7 +85,8 @@ fun LoginPage(navController: NavController) {
                 },
                 label = { Text("Email", color = colorScheme.onBackground) },
                 leadingIcon = {
-                    Icon(imageVector = Icons.Default.Email, contentDescription = null, tint = colorScheme.primary)
+                    Icon(imageVector = Icons.Default.Email, contentDescription = null,
+                        tint = colorScheme.secondary)
                 },
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(32.dp),
@@ -113,18 +120,21 @@ fun LoginPage(navController: NavController) {
                 },
                 label = { Text("Password", color = colorScheme.onBackground) },
                 leadingIcon = {
-                    Icon(imageVector = Icons.Default.Lock, contentDescription = null, tint = colorScheme.primary)
+                    Icon(imageVector = Icons.Default.Lock, contentDescription = null,
+                        tint = colorScheme.secondary)
                 },
                 trailingIcon = {
                     Icon(
-                        imageVector = Icons.Filled.Visibility,
+                        imageVector = if (isPasswordVisible) Icons.Filled.Visibility else Icons.Filled.VisibilityOff,
                         contentDescription = null,
-                        tint = colorScheme.primary
+                        tint = colorScheme.primary,
+                        modifier = Modifier.clickable { isPasswordVisible = !isPasswordVisible }
                     )
                 },
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(32.dp),
                 isError = passwordError,
+                visualTransformation = if (isPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
                 colors = OutlinedTextFieldDefaults.colors(
                     focusedBorderColor = colorScheme.primary,
                     unfocusedBorderColor = colorScheme.onSurface.copy(alpha = 0.5f),
@@ -296,7 +306,6 @@ fun LoginPageLightPreview() {
         LoginPage(navController)
     }
 }
-
 
 @Preview(showBackground = true)
 @Composable

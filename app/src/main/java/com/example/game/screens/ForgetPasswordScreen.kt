@@ -100,7 +100,8 @@ fun ForgetPasswordScreen(navController: NavController) {
                     )},
                 leadingIcon = {Icon(
                     imageVector = Icons.Filled.Email,
-                    contentDescription = "TextField Icon"
+                    contentDescription = "TextField Icon",
+                    tint = colorScheme.secondary
                 )},
                 isError = emailError,
                 modifier = Modifier
