@@ -8,6 +8,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -52,8 +53,10 @@ fun NewsScreen() {
 @Composable
 fun NewsCard(item: NewsItem) {
     Card(
+        colors = CardDefaults.cardColors(
+            containerColor = colorScheme.background
+        ),
         shape = RoundedCornerShape(16.dp),
-        elevation = CardDefaults.cardElevation(defaultElevation = 3.dp),
         modifier = Modifier.fillMaxWidth()
     ) {
         Image(
@@ -68,13 +71,11 @@ fun NewsCard(item: NewsItem) {
         Column(modifier = Modifier.padding(12.dp)) {
             Text(
                 text = item.title,
-                style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold
             )
             Spacer(modifier = Modifier.height(4.dp))
             Text(
                 text = item.description,
-                style = MaterialTheme.typography.bodyMedium
             )
         }
     }
