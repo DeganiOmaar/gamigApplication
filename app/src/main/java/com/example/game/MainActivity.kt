@@ -16,12 +16,13 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.game.navigation.Routes
-import com.example.game.screens.ForgetPasswordScreen
-import com.example.game.screens.LoginPage
-import com.example.game.screens.OtpVerification
-import com.example.game.screens.ResetPassword
-import com.example.game.screens.SignUpScreen
+import com.example.game.screens.auth.ForgetPasswordScreen
+import com.example.game.screens.auth.LoginPage
+import com.example.game.screens.auth.OtpVerification
+import com.example.game.screens.auth.ResetPassword
+import com.example.game.screens.auth.SignUpScreen
 import com.example.game.screens.SplashScreen
+import com.example.game.ui.MainTabs
 import com.example.game.ui.theme.GameTheme
 import kotlinx.coroutines.delay
 
@@ -36,6 +37,7 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     MainNavigation()
+                   MainTabs()
                 }
             }
         }
@@ -50,6 +52,7 @@ fun MainNavigation() {
         navController = navController,
         startDestination = Routes.Splash.route
     ) {
+
         composable(Routes.Splash.route) {
             SplashScreenWithDelay(navController)
         }
@@ -76,6 +79,10 @@ fun MainNavigation() {
 
         composable(Routes.ResetPassword.route) {
             ResetPassword(navController)
+        }
+
+        composable(Routes.MainTabs.route) {
+            com.example.game.ui.MainTabs()
         }
     }
 }

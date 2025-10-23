@@ -1,6 +1,5 @@
-package com.example.game.screens
+package com.example.game.screens.auth
 
-import android.graphics.drawable.Icon
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -27,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.example.game.navigation.Routes
 import com.example.game.ui.theme.GameTheme
 import kotlinx.coroutines.launch
 
@@ -168,7 +168,7 @@ fun ForgetPasswordScreen(navController: NavController) {
                 onClick = {
                     val otpToSend = "6789"
                     navController.navigate(
-                        com.example.game.navigation.Routes.OtpVerification.withCode(otpToSend)
+                        Routes.OtpVerification.withCode(otpToSend)
                     )
                 },
                 modifier = Modifier.fillMaxWidth().height(48.dp)

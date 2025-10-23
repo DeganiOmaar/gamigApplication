@@ -1,4 +1,4 @@
-package com.example.game.screens
+package com.example.game.screens.auth
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -162,11 +162,17 @@ fun LoginPage(navController: NavController) {
                     passwordError = password.isEmpty()
 
                     if (!emailError && !passwordError) {
-                        scope.launch {
-                            snackBarHostState.showSnackbar(
-                                message = "Login successful (placeholder)",
-                                withDismissAction = true
-                            )
+                    //just here for to know snackbar
+                       // scope.launch {
+                           // snackBarHostState.showSnackbar(
+                              //  message = "Login successful (placeholder)",
+                               // withDismissAction = true
+                            //)
+                       // }
+
+
+                        navController.navigate(Routes.MainTabs.route) {
+                            popUpTo(Routes.Login.route) { inclusive = true }
                         }
                     }
                 },

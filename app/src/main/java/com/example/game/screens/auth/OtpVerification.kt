@@ -1,4 +1,4 @@
-package com.example.game.screens
+package com.example.game.screens.auth
 
 
 import androidx.compose.foundation.clickable
